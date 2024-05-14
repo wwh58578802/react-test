@@ -1,7 +1,7 @@
 # Suported Environments
 The repo supports 2 different environments:
--development environment, the backend interface is 'http://localhost:3001', need run loacl backend environemnt.
--production environment, the backend interface is 'https://asteroids.dev.mediasia.cn'
+- development environment, the backend interface is 'http://localhost:3001', need run loacl backend environemnt.
+- production environment, the backend interface is 'https://asteroids.dev.mediasia.cn'
 
 # Structure
 ## assets
@@ -35,21 +35,21 @@ Define interface
 Public method class
 
 # Launch in dev env
-To launch the project in development mode, use yarn to install node modules, run script:
+To launch the project in development mode, use yarn or npm to install node modules, run script:
 ```
-yarn install
-yarn run start
+npm install
+npm run start
 ```
 
 # Launch in prod env
 To launch the project in prodcution mode, use yarn or npm to install, run script:
 ```
-yarn install
-yarn run start:prod
+npm install
+npm run start:prod
 ```
 
 # Build 
 Build code for production mode, run script:
 ```
-yarn run build:prod: 
+npm run build:prod: 
 ```
