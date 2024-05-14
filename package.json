@@ -1,0 +1,44 @@
+{
+  "name": "react-test",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite --mode development",
+    "start:prod": "vite --mode production",
+    "build:prod": "tsc && vite build --mode production",
+    "lint": "eslint -c eslint.config.js src",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "autoprefixer": "^10.4.19",
+    "axios": "^1.6.8",
+    "postcss": "^8.4.38",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.0",
+    "sass": "^1.77.0",
+    "socket.io-client": "4.5.0",
+    "tailwindcss": "^3.4.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.2.0",
+    "@types/node": "^20.12.11",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "@typescript-eslint/parser": "^7.9.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "antd": "^5.17.0",
+    "eslint": "^9.2.0",
+    "eslint-plugin-react": "^7.34.1",
+    "globals": "^15.2.0",
+    "typescript": "^5.2.2",
+    "typescript-eslint": "^7.9.0",
+    "vite": "^5.2.11",
+    "vite-plugin-imp": "^2.4.0",
+    "vite-plugin-svg-icons": "^2.0.1",
+    "vite-plugin-svgr": "^4.2.0"
+  }
+}

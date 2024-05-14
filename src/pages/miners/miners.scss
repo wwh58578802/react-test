@@ -1,0 +1,83 @@
+.layout-container {
+    width: 100%;
+
+    section {
+        border-radius: 0;
+        overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .homepage-layout {
+        display: flex;
+        flex-direction: row;
+        padding: 0 10px 10px 32px;
+    }
+
+    header {
+        text-align: left;
+        color: #fff;
+        height: 80px;
+        line-height: 80px;
+    }
+
+    aside {
+        flex: 0 0 calc(100% - 1000px);
+        max-width: calc(100% - 1000px);
+        min-width: calc(100% - 1000px);
+        width: calc(100% - 1000px);
+        padding-right: 10px;
+    }
+
+    main {
+        // width: 1000px;
+        max-width: 1000px;
+        height: 100%;
+    }
+}
+
+.create-minner-form-text {
+    font-weight: 600;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+}
+
+.mar-t-l {
+    margin: 30px 0 15px 0;
+}
+
+.create-minner-form-content {
+
+    .create-minner-form-item {
+        display: flex;
+
+        .ant-form-item {
+            width: 33%;
+        }
+    }
+
+    .create-minner-form-footer {
+        .ant-form-item {
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+    }
+
+    .ant-input-number {
+        width: 92%;
+    }
+}
+
+.modal-content {
+    font-weight: 600;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+}
+
+.icon-create-miner {
+    display: inline-block;
+    vertical-align: text-bottom;
+}
