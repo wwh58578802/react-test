@@ -53,3 +53,9 @@ Build code for production mode, run script:
 ```
 npm run build:prod: 
 ```
+
+# Running eslint
+To run eslint locally and fix automatically all minor issues:
+```
+npm run lint:fix
+```
