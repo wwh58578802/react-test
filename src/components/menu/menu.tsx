@@ -1,8 +1,9 @@
+import React from 'react'
 import { MenuProps } from '@/types/menu'
-import SvgIcon from "@/components/svgIcon/svgIcon";
+import { SvgIcon } from "@/components/svgIcon/svgIcon";
 import './menu.scss'
 
-export const Menu = ({ activeTab, onTabChange }: MenuProps) => {
+export const Menu: React.FC<MenuProps> = ({ activeTab, onTabChange }) => {
     //menu list
     const menuIList = [{
         label: 'Miners',

@@ -1,8 +1,9 @@
+import React from 'react'
 import { Table } from 'antd'
-import { minersDataProps } from '@/types/miners'
+import { minersProps, minersDataProps } from '@/types/miners'
 import type { TableProps } from 'antd'
 
-export const MinersTable = ({ minersData, onMinersItemClick }: any) => {
+export const MinersTable: React.FC<minersProps> = ({ minersData, onMinersItemClick }) => {
     const columns: TableProps<minersDataProps>['columns'] = [
         {
             title: 'Name',
@@ -23,7 +24,11 @@ export const MinersTable = ({ minersData, onMinersItemClick }: any) => {
             title: 'carryCapacity',
             dataIndex: 'carryCapacity',
             key: 'carryCapacity',
-            render: (carryCapacity) => (<>{carryCapacity}/200</>)
+            render: (carryCapacity) => (
+            <>
+                <span className={carryCapacity > 200?'font-green':''}>{carryCapacity}/200</span>
+            </>
+            )
         },
         {
             title: 'travelSpeed',
@@ -64,7 +69,7 @@ export const MinersTable = ({ minersData, onMinersItemClick }: any) => {
             </>)
         },
     ];
-    const handleRowClick = (record: any) => {
+    const handleRowClick = (record: minersDataProps) => {
         if (onMinersItemClick) {
             onMinersItemClick(record);
         }

@@ -1,13 +1,13 @@
 export interface MenuProps {
-    menuIList?: Array<itemList>;
+    menuIList?: itemList[];
     activeTab: string;
     onItemClick?: (item: string) => void;
     onTabChange?: (item: string) => void;
 }
 
 interface itemList {
-    label: string,
-    key: string,
-    icon: any,
-    activeIcon: any;
+    label: string;
+    key: string;
+    icon: string;
+    activeIcon: string;
 }

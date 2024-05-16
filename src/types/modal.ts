@@ -7,4 +7,4 @@ export interface ModalProps {
     duration?: number;
     maskClosable?: boolean;
     isDuration: boolean
-};
+}

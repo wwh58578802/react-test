@@ -1,5 +1,6 @@
+import React from 'react'
 import { Layout } from 'antd'
-import SvgIcon from "@/components/svgIcon/svgIcon";
+import { SvgIcon } from "@/components/svgIcon/svgIcon";
 import './header.scss'
 const { Header } = Layout;
 

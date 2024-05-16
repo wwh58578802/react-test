@@ -1,9 +1,12 @@
-import SvgIcon from '../svgIcon/svgIcon'
+import React from 'react'
+import { minersProps } from '@/types/miners'
+import { SvgIcon } from '../svgIcon/svgIcon'
 import './map.scss'
 
-export const Map = ({ minersData }: any) => {
+export const Map: React.FC<minersProps> = ({ minersData }) => {
     return (
         <div className="map-container">
+            <span className='map-title'>250 YEARS</span>
             <ul>
                 {
                     minersData.length > 0 && minersData.map((item: any) => (
@@ -13,7 +16,7 @@ export const Map = ({ minersData }: any) => {
                             }} className='icon-pos'>
                                 <SvgIcon name="Vector-miner" size={32}></SvgIcon>
                             </i>
-                            <span className='second-icon-pos' style={{ left: item.planet?.position?.x, top: item.planet?.position?.y }}>
+                            <span className='second-icon-pos' style={{ left: item?.planet?.position?.x, top: item.planet?.position?.y }}>
                                 <i>
                                     {
                                         item.planet.miners == 1 ? (

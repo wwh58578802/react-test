@@ -1,8 +1,10 @@
+import React from 'react'
 import { Modal } from 'antd';
+import { createMinnerFormProps, submitFormData } from '@/types/miners'
 import { Form, Input, InputNumber, Button, Select } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 
-export const CreateMinnerForm = ({ planetsData, onSlectChange, submitForm, createModalVisible, setCreateModalVisible }: any) => {
+export const CreateMinnerForm: React.FC<createMinnerFormProps> = ({ planetsData, onSlectChange, submitForm, createModalVisible, setCreateModalVisible }) => {
     const [form] = useForm();
     const { Option } = Select;
 
@@ -10,6 +12,7 @@ export const CreateMinnerForm = ({ planetsData, onSlectChange, submitForm, creat
         labelCol: { span: 24 },
         wrapperCol: { span: 24 },
     };
+
     const validateMessages = {
         required: 'Please enter ${label}',
         types: {
@@ -29,7 +32,7 @@ export const CreateMinnerForm = ({ planetsData, onSlectChange, submitForm, creat
         form.resetFields();
     };
 
-    const handleSubmitForm = (formData: any) => {
+    const handleSubmitForm = (formData: submitFormData) => {
         form.resetFields();
         submitForm(formData);
     };
@@ -49,7 +52,7 @@ export const CreateMinnerForm = ({ planetsData, onSlectChange, submitForm, creat
                     </Form.Item>
                     <Form.Item name="planet" label="Planet" rules={[{ required: true }]}>
                         <Select className="custom-select" placeholder="Select a planet" onChange={handleSlectChange}>
-                            {planetsData?.map((item: any) => (
+                            {planetsData?.map((item) => (
                                 <Option key={item._id} value={item._id}>
                                     {item.name}
                                 </Option>

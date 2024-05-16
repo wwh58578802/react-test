@@ -1,10 +1,10 @@
+import React from 'react'
 import { Table } from 'antd'
-import { planetsDataProps } from '@/types/miners'
-import SvgIcon from '@/components/svgIcon/svgIcon'
+import { planetsProps, planetsDataProps } from '@/types/miners'
+import { SvgIcon } from '@/components/svgIcon/svgIcon'
 import type { TableProps } from 'antd'
 
-
-export const PlanetsTable = ({ planetsData, createMiner }: any) => {
+export const PlanetsTable: React.FC<planetsProps> = ({ planetsData, createMiner }) => {
     const columns: TableProps<planetsDataProps>['columns'] = [
         {
             title: 'Name',
@@ -20,13 +20,23 @@ export const PlanetsTable = ({ planetsData, createMiner }: any) => {
             title: 'Minerals',
             dataIndex: 'minerals',
             key: 'minerals',
-            render: (minerals) => (<><span className={minerals>1000 ? 'font-green' :''}>{minerals}/1000</span></>)
+            render: (minerals) => (<span className={minerals > 1000 ? 'font-green' : ''}>{minerals}/1000</span>)
         },
         {
             title: '',
             key: 'action',
-            render: () => (
-                <a onClick= {() => handleRowClick()}><i className="icon-create-miner"><SvgIcon name="icon-create-miner" size={11} ></SvgIcon></i>Create a miner</a>
+            render: (_, record) => (
+                <>
+                    {
+                        record.minerals > 1000 ?
+                            (<a onClick={() => handleRowClick()}>
+                                <i className="icon-create-miner">
+                                    <SvgIcon name="icon-create-miner" size={11} ></SvgIcon>
+                                </i>Create a miner
+                            </a>)
+                        : ''
+                    }
+                </>
             ),
         },
     ];
@@ -36,7 +46,7 @@ export const PlanetsTable = ({ planetsData, createMiner }: any) => {
 
     return (
         <>
-            <Table columns={columns} dataSource={planetsData} rowKey={record => record._id} pagination={false}/>
+            <Table columns={columns} dataSource={planetsData} rowKey={record => record._id} pagination={false} />
         </>
     )
 }

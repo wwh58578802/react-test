@@ -1,6 +1,6 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 
-let apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_API_URL;
 const instance: AxiosInstance = axios.create({
     baseURL: apiUrl,
     timeout: 20000,
@@ -15,7 +15,7 @@ instance.interceptors.request.use(
         // Do something before request is sent
         return config;
     },
-    (error) => {
+    (error: AxiosError) => {
         // Do something with request error
         return Promise.reject(error);
     }
@@ -31,32 +31,18 @@ instance.interceptors.response.use(
             return Promise.reject(response.data);
         }
     },
-    (error) => {
+    (error: AxiosError) => {
         // Do something with response error
-        const status = error.response?.status;
-        console.log(error)
-        switch (status) {
-            case 400:
-                break;
-            case 401:
-                break;
-            case 403:
-                break;
-            case 404:
-                break;
-            case 500:
-                break;
-            default:
-        }
         return Promise.reject(error);
     }
 );
 
-export const get = async <T>(url: string, params?: any): Promise<T> => {
+export const get = async <T>(url: string, params?: string): Promise<T> => {
     try {
         const response = await instance.get<T>(url, { params });
         return response.data;
     } catch (error) {
+        handleError(error)
         throw error;
     }
 };
@@ -66,6 +52,7 @@ export const post = async <T>(url: string, data?: any): Promise<T> => {
         const response = await instance.post<T>(url, data);
         return response.data;
     } catch (error) {
+        handleError(error)
         throw error;
     }
 };
@@ -76,6 +63,7 @@ export const del = async <T>(url: string): Promise<T> => {
         const response = await instance.delete<T>(url);
         return response.data;
     } catch (error) {
+        handleError(error)
         throw error;
     }
 };
@@ -86,6 +74,22 @@ export const put = async <T>(url: string, data?: any): Promise<T> => {
         const response = await instance.put<T>(url, data);
         return response.data;
     } catch (error) {
+        handleError(error)
         throw error;
     }
 };
+
+// Handle http request error
+const handleError = (error: any) => {
+    if (
+        error?.response?.status == 400 ||
+        error?.response?.status == 401 ||
+        error?.response?.status == 403 ||
+        error?.response?.status == 404
+    ) {
+        return error.code || error?.response?.data || error._message;
+    } else {
+        // Code is 500 system network error 
+        return error.code || error._message;
+    }
+}

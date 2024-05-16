@@ -1,9 +1,10 @@
+import React from 'react';
 import { Table } from 'antd'
-import { minersHistoryDataProps } from '@/types/miners'
+import { minersHistoryProps, minersHistoryDataProps } from '@/types/miners'
 import type { TableProps } from 'antd';
 import { DateFormat } from '@/utils/utils'
 
-export const MinersHistoryTable = ({ minerHistoryData }: any) => {
+export const MinersHistoryTable: React.FC<minersHistoryProps> = ({ minerHistoryData }) => {
     const columns: TableProps<minersHistoryDataProps>['columns'] = [
         {
             title: 'Date',

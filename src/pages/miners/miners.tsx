@@ -3,7 +3,7 @@ import { Flex, Layout } from 'antd'
 import HeaderComponent from '@/components/header/header'
 import { Menu } from '@/components/menu/menu'
 import { get, post } from '@/http/http'
-import { minersDataProps, minersHistoryDataProps, asteroidsDataProps, planetsDataProps, mapDataProps } from '@/types/miners'
+import { minersDataProps, minersHistoryDataProps, asteroidsDataProps, planetsDataProps, mapDataProps, submitFormData } from '@/types/miners'
 import { MinersTable } from '@/components/miners/minersTable'
 import { MinersHistoryTable } from '@/components/miners/minerHistoryTable'
 import { AsteroidTable } from '@/components/miners/asteroidsTable'
@@ -23,7 +23,7 @@ const miners: React.FC = () => {
         [historyModalVisible, setHistoryModalVisible] = useState(false),
         [minerHistoryModalTitle, setMinerHistoryModalTitle] = useState(''),
         [asteroidsData, setAsteroidsData] = useState<asteroidsDataProps[]>([]),
-        [planetsData, setPlanetsData] = useState([]),
+        [planetsData, setPlanetsData] = useState<planetsDataProps[]>([]),
         [createModalVisible, setCreateModalVisible] = useState(false),
         [currentData, setCurrentData] = useState<planetsDataProps>(),
         [successModalVisible, setSuccessModalVisible] = useState(false);
@@ -47,17 +47,17 @@ const miners: React.FC = () => {
             // called for each packet received
             engine.on("packet", ({ data }) => {
                 if (!data || !data.includes(`"tick",`)) return;
-                let res = data.split(`"tick",`)
-                let objKey = Object.keys(res)[1];
-                let objValues = (res[objKey]).slice(0, -1);
-                let mapData: mapDataProps = JSON.parse(objValues)
+                const res = data.split(`"tick",`)
+                const objKey = Object.keys(res)[1];
+                const objValues = (res[objKey]).slice(0, -1);
+                const mapData: mapDataProps = JSON.parse(objValues)
 
                 handleMinerData(mapData.miners)
                 handleAsteroidsData(mapData.asteroids)
                 handlePlanetsData(mapData.planets)
             });
         });
-
+        
         socket.on('disconnect', () => {
             console.log('Disconnected from the socket server');
             setTimeout(() => {
@@ -90,28 +90,26 @@ const miners: React.FC = () => {
     }
     // get Miners data
     const getMinersData = () => {
-        get('/miners').then((res: any) => {
-            let data: any;
-            data = res;
-            setMinersData(data)
+        get<minersDataProps[]>('/miners').then((res) => {
+            setMinersData(res)
         }).catch((err) => {
-            console.log(err.response?.data);
+            console.log(err.response?.data || err.message);
             throw err;
         });
     }
 
     //get minners data from websocket
-    const handleMinerData = (data: any) => {
+    const handleMinerData = (data: minersDataProps[]) => {
         setMinersData(data)
     }
 
     //get Asteroids data from websocket
-    const handleAsteroidsData = (data: any) => {
+    const handleAsteroidsData = (data: asteroidsDataProps[]) => {
         setAsteroidsData(data)
     }
 
     // get planets data from websocket
-    const handlePlanetsData = (data: any) => {
+    const handlePlanetsData = (data: planetsDataProps[]) => {
         setPlanetsData(data)
     }
 
@@ -127,41 +125,35 @@ const miners: React.FC = () => {
 
     // Render the minner history table
     const renderMinersHistoryTable = () => {
-        return (<MinersHistoryTable minerHistoryData={minerHistoryData} />)
+        return (<MinersHistoryTable minerHistoryData={minerHistoryData} closeHistoryModa={closeHistoryModa} />)
     }
 
     // Click the miners item and request minier's history interface
-    const handleMinersItemClick = (item: any) => {
+    const handleMinersItemClick = (item: minersDataProps) => {
         showModal();
         setMinerHistoryModalTitle(item.name);
-        get('/history?minerId=' + item._id).then((res) => {
-            let data: any;
-            data = res;
-            setMinerHistoryData(data)
+        get<minersHistoryDataProps[]>('/history?minerId=' + item._id).then((res) => {
+            setMinerHistoryData(res)
         }).catch((err) => {
-            console.log(err.response?.data);
+            console.log(err.response?.data || err.message);
             throw err;
         });
     }
 
     // Get Asteroids data
     const getAsteroidsData = () => {
-        get<{ data: any }>('/asteroids').then((res) => {
-            let data: any;
-            data = res;
-            setAsteroidsData(data)
+        get<asteroidsDataProps[]>('/asteroids').then((res) => {
+            setAsteroidsData(res)
         }).catch((err) => {
-            console.log(err.response?.data);
+            console.log(err.response?.data || err.message);
             throw err;
         });
     }
 
     // Get Asteroids data
     const getPlanetsData = () => {
-        get<{ data: planetsDataProps }>('/planets').then((res) => {
-            let data: any;
-            data = res;
-            setPlanetsData(data)
+        get<planetsDataProps[]>('/planets').then((res) => {
+            setPlanetsData(res)
         }).catch((err) => {
             console.log(err.response?.data || err.message);
             throw err;
@@ -190,17 +182,18 @@ const miners: React.FC = () => {
 
     // Select planetId
     const onSlectChange = (planetId: string) => {
-        setCurrentData(() => planetsData.filter((item: any) => item._id === planetId)[0]);
+        setCurrentData(() => planetsData.filter((item: planetsDataProps) => item._id === planetId)[0]);
     };
 
     // Render the success modal
     const renderSuccessModalContent = () => {
-        return (<p className='create-minner-form-text mar-t-l'>The miner was successfully created</p>)
+        return (
+            <p className='create-minner-form-text mar-t-l'>The miner was successfully created</p>)
     };
 
     // Submit the create miner form data
-    const submitForm = (formData: any) => {
-        let params = {
+    const submitForm = (formData: submitFormData) => {
+        const params = {
             ...formData,
             'x': currentData?.position.x,
             'y': currentData?.position.y,
@@ -233,7 +226,7 @@ const miners: React.FC = () => {
                             <div className="tab-content">
                                 {
                                     activeTab === 'miners' && (
-                                        <MinersTable minersData={minersData} onMinersItemClick={(item: any) => handleMinersItemClick(item)} />
+                                        <MinersTable minersData={minersData} onMinersItemClick={(item) => handleMinersItemClick(item)} />
                                     )
                                 }
                                 {
@@ -255,7 +248,7 @@ const miners: React.FC = () => {
                 </Layout>
             </Flex>
             <CustomModal isDuration={false} title={'History of' + ' ' + minerHistoryModalTitle} width={782} visible={historyModalVisible} onClose={closeHistoryModa} maskClosable={false} content={renderMinersHistoryTable()} />
-            <CreateMinnerForm createModalVisible={createModalVisible} setCreateModalVisible={setCreateModalVisible} planetsData={planetsData} onSlectChange={(planetId: string) => onSlectChange(planetId)} submitForm={(formData: any) => submitForm(formData)} />
+            <CreateMinnerForm createModalVisible={createModalVisible} setCreateModalVisible={setCreateModalVisible} planetsData={planetsData} onSlectChange={(planetId: string) => onSlectChange(planetId)} submitForm={(formData) => submitForm(formData)} />
             <CustomModal isDuration={true} title='' width={447} duration={3000} visible={successModalVisible} onClose={closeSuccessModal} content={renderSuccessModalContent()} />
         </>
     );

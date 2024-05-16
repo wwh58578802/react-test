@@ -1,8 +1,9 @@
+import React from 'react'
 import { Table } from 'antd'
-import { asteroidsDataProps } from '@/types/miners'
+import { asteroidsProps, asteroidsDataProps } from '@/types/miners'
 import type { TableProps } from 'antd';
 
-export const AsteroidTable = ({ asteroidsData }: any) => {
+export const AsteroidTable: React.FC<asteroidsProps> = ({ asteroidsData }) => {
     const columns: TableProps<asteroidsDataProps>['columns'] = [
         {
             title: 'Name',

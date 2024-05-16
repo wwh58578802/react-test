@@ -3,4 +3,4 @@ export interface SvgIconProps {
     color?: string;
     prefix?: string;
     name: string;
-};
+}
