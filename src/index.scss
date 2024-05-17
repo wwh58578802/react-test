@@ -14,24 +14,24 @@ html {
 @font-face {
     font-family: Poppins;
     src: url('../src/assets/fonts/poppins/poppins-v15-latin-regular.eot'),
-    url('../src/assets/fonts/poppins/poppins-v15-latin-regular.svg') format('svg'),
-    url('../src/assets/fonts/poppins/poppins-v15-latin-regular.ttf') format('truetype'),
-    url('../src/assets/fonts/poppins/poppins-v15-latin-regular.woff') format('woff'),
-    url('../src/assets/fonts/poppins/poppins-v15-latin-regular.woff2') format('woff2'),
+        url('../src/assets/fonts/poppins/poppins-v15-latin-regular.svg') format('svg'),
+        url('../src/assets/fonts/poppins/poppins-v15-latin-regular.ttf') format('truetype'),
+        url('../src/assets/fonts/poppins/poppins-v15-latin-regular.woff') format('woff'),
+        url('../src/assets/fonts/poppins/poppins-v15-latin-regular.woff2') format('woff2'),
 }
 
 @font-face {
     font-family: Lato;
     src: url('../src/assets/fonts/lato/lato-v17-latin-700.eot'),
-    url('../src/assets/fonts/lato/lato-v17-latin-700.ttf') format('truetype'),
-    url('../src/assets/fonts/lato/lato-v17-latin-700.woff') format('woff'),
-    url('../src/assets/fonts/lato/lato-v17-latin-700.woff2') format('woff2'),
-    url('../src/assets/fonts/lato/lato-v17-latin-regular.eot'),
-    url('../src/assets/fonts/lato/lato-v17-latin-regular.ttf') format('truetype'),
-    url('../src/assets/fonts/lato/lato-v17-latin-regular.woff') format('woff'),
-    url('../src/assets/fonts/lato/lato-v17-latin-regular.woff2') format('woff2'),
-    url('../src/assets/fonts/lato/lato-v17-latin-700.svg') format('svg'),
-    url('../src/assets/fonts/lato/lato-v17-latin-regular.svg') format('svg');
+        url('../src/assets/fonts/lato/lato-v17-latin-700.ttf') format('truetype'),
+        url('../src/assets/fonts/lato/lato-v17-latin-700.woff') format('woff'),
+        url('../src/assets/fonts/lato/lato-v17-latin-700.woff2') format('woff2'),
+        url('../src/assets/fonts/lato/lato-v17-latin-regular.eot'),
+        url('../src/assets/fonts/lato/lato-v17-latin-regular.ttf') format('truetype'),
+        url('../src/assets/fonts/lato/lato-v17-latin-regular.woff') format('woff'),
+        url('../src/assets/fonts/lato/lato-v17-latin-regular.woff2') format('woff2'),
+        url('../src/assets/fonts/lato/lato-v17-latin-700.svg') format('svg'),
+        url('../src/assets/fonts/lato/lato-v17-latin-regular.svg') format('svg');
 }
 
 .font-green {
@@ -250,4 +250,13 @@ html {
     .ant-select-arrow {
         color: #fff
     }
+}
+
+.ant-input-outlined:focus-within,
+.ant-input-number-outlined:focus-within {
+    background-color: transparent;
+}
+
+.ant-input-number .ant-input-number-input {
+    transition: none;
 }
