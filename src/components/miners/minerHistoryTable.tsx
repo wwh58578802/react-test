@@ -32,7 +32,7 @@ export const MinersHistoryTable: React.FC<minersHistoryProps> = ({ minerHistoryD
             key: 'capacity',
             render: (capacity) => (
                 <>
-                    {capacity.current}/{capacity.max}
+                    <span className={capacity.current === 200 ? 'font-green' : ''}>{capacity.current}/{capacity.max}</span>
                 </>
             ),
         },

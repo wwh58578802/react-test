@@ -14,6 +14,11 @@ export const AsteroidTable: React.FC<asteroidsProps> = ({ asteroidsData }) => {
             title: 'Minerals',
             dataIndex: 'minerals',
             key: 'minerals',
+            render: (minerals) => (
+                <>
+                    <span className={minerals === 0 ? 'font-red' : ''}>{minerals}</span>
+                </>
+            ),
         },
         {
             title: 'CurrentMiner',
