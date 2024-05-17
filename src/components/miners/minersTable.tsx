@@ -26,7 +26,7 @@ export const MinersTable: React.FC<minersProps> = ({ minersData, onMinersItemCli
             key: 'carryCapacity',
             render: (carryCapacity) => (
             <>
-                <span className={carryCapacity > 200?'font-green':''}>{carryCapacity}/200</span>
+                    <span className={carryCapacity === 200 ?'font-green':''}>{carryCapacity}/200</span>
             </>
             )
         },
