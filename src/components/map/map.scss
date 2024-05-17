@@ -2,7 +2,7 @@
     background: url('../../assets/icons/Background.svg');
     background-size: cover;
     width: 100%;
-    height: 1000px;
+    height: 10rem;
     position: relative;
 
     .icon-item {
@@ -23,5 +23,13 @@
         .second-icon-pos {
             position: absolute;
         }
+    }
+
+    .map-title {
+        font-family: Lato;
+        color: #fff;
+        font-size: 0.16rem;
+        margin: 0.12rem 0 0 0.12rem;
+        display: inline-block;
     }
 }
