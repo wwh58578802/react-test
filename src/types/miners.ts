@@ -96,8 +96,8 @@ export interface createMinnerFormProps {
     submitForm: (data: submitFormData) => void;
     createModalVisible: boolean;
     setCreateModalVisible: (value: boolean) => void;
+    minerNameList: minerNameListProps[];
 }
-
 export interface submitFormData {
     _id: string,
     name: string;
@@ -105,4 +105,8 @@ export interface submitFormData {
     carryCapacity: number;
     travelSpeed: number;
     miningSpeed: number;
+}
+
+export interface minerNameListProps {
+    name: string;
 }

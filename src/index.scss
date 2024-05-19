@@ -253,7 +253,8 @@ html {
 }
 
 .ant-input-outlined:focus-within,
-.ant-input-number-outlined:focus-within {
+.ant-input-number-outlined:focus-within,
+.ant-input-number-outlined.ant-input-number-status-error:not(.ant-input-number-disabled):focus-within {
     background-color: transparent;
 }
 

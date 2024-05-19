@@ -4,7 +4,7 @@ import { createMinnerFormProps, submitFormData } from '@/types/miners'
 import { Form, Input, InputNumber, Button, Select } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 
-export const CreateMinnerForm: React.FC<createMinnerFormProps> = ({ planetsData, onSlectChange, submitForm, createModalVisible, setCreateModalVisible }) => {
+export const CreateMinnerForm: React.FC<createMinnerFormProps> = ({ planetsData, onSlectChange, submitForm, createModalVisible, setCreateModalVisible, minerNameList }) => {
     const [form] = useForm();
     const { Option } = Select;
 
@@ -37,6 +37,18 @@ export const CreateMinnerForm: React.FC<createMinnerFormProps> = ({ planetsData,
         submitForm(formData);
     };
 
+    // Check the name is taken
+    const validateName = async (_: any, value: string) => {
+        const checkName = minerNameList.some(item => item.name === value);
+        if (!value) {
+            return Promise.reject(new Error('Please enter name'));
+        }
+        if (checkName) {
+            return Promise.reject(new Error('This name is already taken.'));
+        }
+        return Promise.resolve();
+    };
+
     return (
         <>
             <Modal title='Create a minner' width={447} open={createModalVisible} onCancel={closeModal} footer={null} maskClosable={false}>
@@ -47,7 +59,7 @@ export const CreateMinnerForm: React.FC<createMinnerFormProps> = ({ planetsData,
                     style={{ maxWidth: 447 }}
                     validateMessages={validateMessages}
                 >
-                    <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+                    <Form.Item name="name" label="Name" rules={[{ required: true, validator: validateName }]}>
                         <Input />
                     </Form.Item>
                     <Form.Item name="planet" label="Planet" rules={[{ required: true }]}>

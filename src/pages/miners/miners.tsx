@@ -3,7 +3,7 @@ import { Flex, Layout } from 'antd'
 import HeaderComponent from '@/components/header/header'
 import { Menu } from '@/components/menu/menu'
 import { get, post } from '@/http/http'
-import { minersDataProps, minersHistoryDataProps, asteroidsDataProps, planetsDataProps, mapDataProps, submitFormData } from '@/types/miners'
+import { minersDataProps, minersHistoryDataProps, asteroidsDataProps, planetsDataProps, mapDataProps, submitFormData, minerNameListProps } from '@/types/miners'
 import { MinersTable } from '@/components/miners/minersTable'
 import { MinersHistoryTable } from '@/components/miners/minerHistoryTable'
 import { AsteroidTable } from '@/components/miners/asteroidsTable'
@@ -26,7 +26,8 @@ const miners: React.FC = () => {
         [planetsData, setPlanetsData] = useState<planetsDataProps[]>([]),
         [createModalVisible, setCreateModalVisible] = useState(false),
         [currentData, setCurrentData] = useState<planetsDataProps>(),
-        [successModalVisible, setSuccessModalVisible] = useState(false);
+        [successModalVisible, setSuccessModalVisible] = useState(false),
+        [minerNameList, setMinerNameList] = useState<minerNameListProps[] > ([]);
 
     const socket = WebsocketServe();
 
@@ -52,6 +53,7 @@ const miners: React.FC = () => {
                 const objValues = (res[objKey]).slice(0, -1);
                 const mapData: mapDataProps = JSON.parse(objValues)
 
+                console.log(mapData.miners)
                 handleMinerData(mapData.miners)
                 handleAsteroidsData(mapData.asteroids)
                 handlePlanetsData(mapData.planets)
@@ -92,6 +94,7 @@ const miners: React.FC = () => {
     const getMinersData = () => {
         get<minersDataProps[]>('/miners').then((res) => {
             setMinersData(res)
+            getMinerNameList(res);
         }).catch((err) => {
             console.log(err.response?.data || err.message);
             throw err;
@@ -100,7 +103,8 @@ const miners: React.FC = () => {
 
     //get minners data from websocket
     const handleMinerData = (data: minersDataProps[]) => {
-        setMinersData(data)
+        setMinersData(data);
+        getMinerNameList(data);
     }
 
     //get Asteroids data from websocket
@@ -215,6 +219,14 @@ const miners: React.FC = () => {
             });
     };
 
+    // get miner name list
+    const getMinerNameList = (data:any)=>{
+        const minerNameList = data.map((item: any) => {
+            return {name: item.name};
+        })
+        setMinerNameList(minerNameList)
+    }
+
     return (
         <>
             <Flex gap="middle" wrap className='layout-container'>
@@ -248,7 +260,7 @@ const miners: React.FC = () => {
                 </Layout>
             </Flex>
             <CustomModal isDuration={false} title={'History of' + ' ' + minerHistoryModalTitle} width={782} visible={historyModalVisible} onClose={closeHistoryModa} maskClosable={false} content={renderMinersHistoryTable()} />
-            <CreateMinnerForm createModalVisible={createModalVisible} setCreateModalVisible={setCreateModalVisible} planetsData={planetsData} onSlectChange={(planetId: string) => onSlectChange(planetId)} submitForm={(formData) => submitForm(formData)} />
+            <CreateMinnerForm createModalVisible={createModalVisible} setCreateModalVisible={setCreateModalVisible} planetsData={planetsData} onSlectChange={(planetId: string) => onSlectChange(planetId)} submitForm={(formData) => submitForm(formData)} minerNameList={minerNameList} />
             <CustomModal isDuration={true} title='' width={447} duration={3000} visible={successModalVisible} onClose={closeSuccessModal} content={renderSuccessModalContent()} />
         </>
     );
