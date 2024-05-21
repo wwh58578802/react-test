@@ -27,7 +27,7 @@ const miners: React.FC = () => {
         [createModalVisible, setCreateModalVisible] = useState(false),
         [currentData, setCurrentData] = useState<planetsDataProps>(),
         [successModalVisible, setSuccessModalVisible] = useState(false),
-        [minerNameList, setMinerNameList] = useState<minerNameListProps[] > ([]);
+        [minerNameList, setMinerNameList] = useState<minerNameListProps[]>([]);
 
     const socket = WebsocketServe();
 
@@ -53,13 +53,13 @@ const miners: React.FC = () => {
                 const objValues = (res[objKey]).slice(0, -1);
                 const mapData: mapDataProps = JSON.parse(objValues)
 
-                console.log(mapData.miners)
+                // console.log(mapData.miners)
                 handleMinerData(mapData.miners)
                 handleAsteroidsData(mapData.asteroids)
                 handlePlanetsData(mapData.planets)
             });
         });
-        
+
         socket.on('disconnect', () => {
             console.log('Disconnected from the socket server');
             setTimeout(() => {
@@ -80,6 +80,10 @@ const miners: React.FC = () => {
         };
     }, [socket]);
 
+    useEffect(() => {
+        console.log('minersData updated:', minersData);
+    }, [minersData]);
+
     // Switch tab
     const onTabChange = (key: string) => {
         setActiveTab(key);
@@ -93,7 +97,7 @@ const miners: React.FC = () => {
     // get Miners data
     const getMinersData = () => {
         get<minersDataProps[]>('/miners').then((res) => {
-            setMinersData(res)
+            setMinersData(res);
             getMinerNameList(res);
         }).catch((err) => {
             console.log(err.response?.data || err.message);
@@ -220,12 +224,27 @@ const miners: React.FC = () => {
     };
 
     // get miner name list
-    const getMinerNameList = (data:any)=>{
+    const getMinerNameList = (data: any) => {
         const minerNameList = data.map((item: any) => {
-            return {name: item.name};
+            return { name: item.name };
         })
         setMinerNameList(minerNameList)
     }
+
+    // Merge miners data abd planets data
+    const mergedArray = (minersData: minersDataProps[], planetsData: planetsDataProps[]) => {
+        return minersData.map((minerItem: any) => {
+            const planetItem = planetsData.find((planetItem: any) => {
+                if (planetItem._id === minerItem.planet) {
+                    minerItem.planet = planetItem
+                }
+            });
+            return planetItem ? { ...minerItem, ...planetItem } : minerItem;
+        });
+    }
+
+    const mergedMinersAndPlanets = mergedArray(minersData, planetsData);
+    console.log(mergedMinersAndPlanets)
 
     return (
         <>

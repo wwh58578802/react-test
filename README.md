@@ -1,7 +1,8 @@
+
 # Suported Environments
 The repo supports 2 different environments:
 - development environment, the backend interface is 'http://localhost:3001', need run loacl backend environemnt.
-- production environment, the backend interface is 'https://asteroids.dev.mediasia.cn'
+- production environment, the backend interface is 'http://asteroids.dev.mediasia.cn'
 
 # Structure
 ## assets
@@ -26,7 +27,7 @@ Pages component
 To store router
 
 ## socket
-Define Websocket serve
+Define Websocket serve, used socket.io client, 'https://socket.io/'
 
 ## type
 Define interface

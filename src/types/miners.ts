@@ -6,7 +6,7 @@ export interface mapDataProps {
 export interface minersDataProps {
     _id: string;
     name: string;
-    plenet?: planetsDataProps;
+    plenet?: planetsDataProps | string;
     x: number;
     y: number;
     angle: number;
@@ -16,7 +16,7 @@ export interface minersDataProps {
     status: number;
     minerals: number;
     __v: number;
-    target?: asteroidsDataProps;
+    target?: asteroidsDataProps | string;
     targetType: string;
     position?: string;
 }
